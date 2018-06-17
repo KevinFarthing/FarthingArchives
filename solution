@@ -1,0 +1,28 @@
+class VigenereCipher(object):
+    def __init__(self, key, alphabet):
+        self.key = key
+        self.alphabet = alphabet
+#         self.keyexpand = [ord(l)-97 for l in (key*(int(len(text)/len(key))+1))[:len(text)]]
+    
+    def encode(self, text):
+        text = [self.alphabet.index(l) if l in self.alphabet else l for l in text]
+        keyexpand = [self.alphabet.index(l) for l in (self.key*(int(len(text)/len(self.key))+1))[:len(text)]]
+        for i in range(len(text)):
+            if type(text[i]) == int:
+                text[i]=self.alphabet[(text[i]+keyexpand[i])%len(self.alphabet)]
+            else:
+                text[i] = text[i]
+        print(self.alphabet)
+        print(self.key)
+        return "".join(text)
+                
+    
+    def decode(self, text):
+        text = [self.alphabet.index(l) if l in self.alphabet else l for l in text]
+        keyexpand = [self.alphabet.index(l) for l in (self.key*(int(len(text)/len(self.key))+1))[:len(text)]]
+        for i in range(len(text)):
+            if type(text[i]) == int:
+                text[i]=self.alphabet[(text[i]-keyexpand[i])%len(self.alphabet)]
+            else:
+                text[i] = text[i]
+        return "".join(text)           
